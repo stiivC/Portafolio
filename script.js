@@ -349,5 +349,93 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
     document.head.appendChild(style);
     
+    // Funcionalidad de descarga de la hoja de vida
+    const downloadCvBtn = document.getElementById('download-cv-btn');
+    if (downloadCvBtn) {
+        downloadCvBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            downloadCV();
+        });
+    }
+    
+    // Funcionalidad de descarga de la hoja de vida en la sección de contacto
+    const downloadCvBtnContact = document.getElementById('download-cv-btn-contact');
+    if (downloadCvBtnContact) {
+        downloadCvBtnContact.addEventListener('click', function(e) {
+            e.preventDefault();
+            downloadCV();
+        });
+    }
+    
+    // Función para descargar la hoja de vida
+    function downloadCV() {
+        const cvPath = 'assent/Document/Hoja_de_Vida_Jimmy_Cepeda.pdf';
+        
+        // Crear un enlace temporal para la descarga
+        const link = document.createElement('a');
+        link.href = cvPath;
+        link.download = 'Hoja_de_Vida_Jimmy_Cepeda.pdf';
+        
+        // Agregar el enlace al DOM
+        document.body.appendChild(link);
+        
+        // Simular clic en el enlace
+        link.click();
+        
+        // Remover el enlace temporal
+        document.body.removeChild(link);
+        
+        // Mostrar mensaje de confirmación
+        showDownloadMessage();
+    }
+    
+    // Función para mostrar mensaje de descarga exitosa
+    function showDownloadMessage() {
+        // Crear elemento de mensaje
+        const message = document.createElement('div');
+        message.className = 'download-message';
+        message.innerHTML = `
+            <div class="download-message-content">
+                <i class="fas fa-check-circle"></i>
+                <span>¡Hoja de vida descargada exitosamente!</span>
+            </div>
+        `;
+        
+        // Agregar estilos al mensaje
+        message.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 14px;
+        `;
+        
+        // Agregar al DOM
+        document.body.appendChild(message);
+        
+        // Animar entrada
+        setTimeout(() => {
+            message.style.transform = 'translateX(0)';
+        }, 100);
+        
+        // Remover después de 3 segundos
+        setTimeout(() => {
+            message.style.transform = 'translateX(400px)';
+            setTimeout(() => {
+                if (message.parentNode) {
+                    message.parentNode.removeChild(message);
+                }
+            }, 300);
+        }, 3000);
+    }
+    
     console.log('Portafolio cargado exitosamente! 🚀');
 });
